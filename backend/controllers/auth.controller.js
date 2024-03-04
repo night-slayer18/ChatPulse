@@ -62,9 +62,15 @@ const loginUser = async (req, res) => {
     }
 };
 
-const logoutUser = async (req, res) => {
-    res.send('logoutUser')
-    console.log('logoutUser')
+const logoutUser = (req, res) => {
+    try{
+        res.clearCookie('jwt')
+        res.status(200).json({success: true, message: "Logged out successfully"})
+    }
+    catch(err){
+        console.log(err.message)
+        res.status(500).json({success: false, message: "Something went wrong"})
+    }
 }
 
 module.exports = { loginUser, signupUser, logoutUser };
