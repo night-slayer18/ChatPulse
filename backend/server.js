@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/messages', require('./routes/message.routes'));
+app.use('/api/users', require('./routes/user.routes'));
 
 app.listen(PORT, () => {
     connectDB();
