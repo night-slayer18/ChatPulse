@@ -35,8 +35,31 @@ const signupUser = async (req, res) => {
     }
 }
 const loginUser = async (req, res) => {
-    res.send('loginUser')
-    console.log('loginUser')
+    let success = false;
+    try{
+        const {username, password} = req.body;
+        const user = await User.findOne({username})
+        if(!user) {
+            return res.status(400).json({success,message: "User does not exist"})
+        }
+        const isMatch = await bcrypt.compare(password, user.password)
+        if(!isMatch) {
+            return res.status(400).json({success,message: "Invalid credentials"})
+        } 
+        generateJWT(user._id,res)
+        success = true;
+        res.status(200).json({
+            success,
+            _id: user._id,
+            fullName: user.fullName,
+            username: user.username,
+            profilePic: user.profilePic,
+        })
+    }
+    catch(err){
+        console.log(err.message)
+        res.status(500).json({success,message: "Something went wrong"})
+    }
 };
 
 const logoutUser = async (req, res) => {
