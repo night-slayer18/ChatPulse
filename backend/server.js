@@ -3,10 +3,11 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 // const cors = require('cors');
 
+
 const connectDB = require('./db/connectDB');
+const { app, server } = require('./socket/socket');
 
 const PORT = process.env.PORT || 5000;
-const app = express();
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/messages', require('./routes/message.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     connectDB();
     console.log(`Server is listening on port ${PORT}`);
 });
