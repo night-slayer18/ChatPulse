@@ -11,6 +11,7 @@ const Message = ({message}) => {
 	const profilePic = isSent ? authUser.profilePic : selectedConversation?.profilePic;
 	const bubbleBg = isSent ? 'bg-blue-500' : 'bg-gray-600';
 	const formattedTime = extractTime(message.createdAt);
+	const shakeClass = message.shouldShake ? 'shake' : '';
 	return (
 		<div className={`chat ${chatClassName}`}>
 			<div className='chat-image avatar'>
@@ -18,7 +19,7 @@ const Message = ({message}) => {
 					<img alt='Tailwind CSS chat bubble component' src={profilePic} />
 				</div>
 			</div>
-			<div className={`chat-bubble text-white bg-blue-500 pb-2 ${bubbleBg}`}>{message.message}</div>
+			<div className={`chat-bubble text-white pb-2 ${bubbleBg} ${shakeClass}`}>{message.message}</div>
 			<div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
 		</div>
 	);
@@ -29,6 +30,7 @@ Message.propTypes = {
 		message: PropTypes.string.isRequired,
 		senderId: PropTypes.string.isRequired,
 		createdAt: PropTypes.string.isRequired,
+		shouldShake: PropTypes.bool,
 	}).isRequired,
 };
 
