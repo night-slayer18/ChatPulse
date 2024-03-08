@@ -17,7 +17,7 @@ export const SocketProvider = ({ children }) => {
     const {authUser} = useAuthContext();
     useEffect(() => {
         if(authUser) {
-            const socket = io('http://localhost:8000',{
+            const socket = io('https://chatpulse-wk5p.onrender.com',{
                 query: {
                     userId: authUser._id
                 }
